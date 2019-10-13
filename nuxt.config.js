@@ -1,4 +1,5 @@
 import data from './static/storedata.json'
+
 let dynamicRoutes = () => {
   return new Promise(resolve => {
     resolve(data.map(el => `product/${el.id}`))
@@ -23,8 +24,8 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href:
@@ -50,7 +51,9 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [
+    '@nuxtjs/pwa',
+  ],
   /*
    ** Build configuration
    */
@@ -59,5 +62,10 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  pwa: {
+    workbox: {
+      /* workbox options */
+    }
   }
 }
