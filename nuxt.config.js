@@ -1,12 +1,41 @@
 import hooks from './hooks'
 import data from './static/storedata.json';
+import crypto from 'crypto';
 import path from 'path'
 import { InjectManifest } from "workbox-webpack-plugin";
 
-let dynamicRoutes = () => {
+const dynamicURLs = data.map(el => `product/${el.id}`)
+
+const dynamicRoutes = () => {
   return new Promise(resolve => {
-    resolve(data.map(el => `product/${el.id}`))
+    resolve(dynamicURLs)
   })
+}
+
+function templatedURLs() {
+  const staticURLs = this.buildContext.options.router.routes.map(({ path }) => path)
+    .filter(route => !route.includes('/:'))
+
+  return [...staticURLs, ...dynamicURLs.map(url => `/${url}`)].reduce((acc, url) => {
+    // Add revision version to the url
+    acc[url] = crypto.randomBytes(7).toString('hex')
+    return acc
+  }, {})
+}
+
+const manifestTransformFn = originalManifest => {
+  const manifest = originalManifest.map(entry => {
+    return {
+      ...entry,
+      // sanitize the generated urls
+      url: entry.url.startsWith('static/')
+        ? entry.url.replace('static', '')
+        : entry.url
+    };
+  });
+  // Optionally, set warning messages.
+  const warnings = []
+  return { manifest, warnings }
 }
 
 export default {
@@ -67,32 +96,21 @@ export default {
      */
     extend(config, ctx) {
       if (!ctx.isDev && ctx.isClient) {
-        const swSrc = 'assets/service-worker-seed.js'
+        const swSrc = 'assets/sw-src.js'
+        // Change the destination folder if it's in "generate" mode because
+        // maybe we don't have control over the server to add the header
         const swDest = this.buildContext.isStatic ? path.resolve('static/sw.js') : 'sw.js'
-        config.plugins.push(
-          new InjectManifest({
-            swSrc,
-            swDest,
-            exclude: [/\.\.\/server/, /sw\.js/],
-            globDirectory: '.',
-            globPatterns: ['static/**/*.{js,png,html,css,svg,ico,jpg}'],
-            manifestTransforms: [
-              originalManifest => {
-                const manifest = originalManifest.map(entry => {
-                  return {
-                    ...entry,
-                    url: entry.url.startsWith('static/')
-                      ? entry.url.replace('static', '')
-                      : entry.url
-                  };
-                });
-                // Optionally, set warning messages.
-                const warnings = []
-                return { manifest, warnings }
-              }
-            ]
-          })
-        );
+        const options = {
+          swSrc,
+          swDest,
+          exclude: [/\.\.\/server/, /sw\.js/], // exclude the sw.js itself and the other unwanted urls
+          templatedURLs: templatedURLs.call(this),
+          globDirectory: '.',
+          globPatterns: ['static/**/*.{js,png,html,css,svg,ico,jpg}'],
+          manifestTransforms: [manifestTransformFn],
+        }
+
+        config.plugins.push(new InjectManifest(options));
       }
       return config
     }
