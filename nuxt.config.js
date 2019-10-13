@@ -96,4 +96,13 @@ export default {
       return config
     }
   },
+  render: {
+    dist: {
+      setHeaders(res, path, stat) {
+        if (path.includes('sw.js')) {
+          res.setHeader('Service-Worker-Allowed', '/');
+        }
+      }
+    }
+  },
 }
