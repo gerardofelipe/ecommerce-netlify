@@ -1,3 +1,4 @@
+import hooks from './hooks'
 import data from './static/storedata.json';
 import path from 'path'
 import { InjectManifest } from "workbox-webpack-plugin";
@@ -105,4 +106,5 @@ export default {
       }
     }
   },
+  hooks: hooks(this),
 }
