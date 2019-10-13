@@ -1,4 +1,7 @@
-import data from './static/storedata.json'
+import data from './static/storedata.json';
+import path from 'path'
+import { InjectManifest } from "workbox-webpack-plugin";
+
 let dynamicRoutes = () => {
   return new Promise(resolve => {
     resolve(data.map(el => `product/${el.id}`))
@@ -23,8 +26,8 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href:
@@ -58,6 +61,36 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
-  }
+    extend(config, ctx) {
+      if (!ctx.isDev && ctx.isClient) {
+        const swSrc = 'assets/service-worker-seed.js'
+        const swDest = this.buildContext.isStatic ? path.resolve('static/sw.js') : 'sw.js'
+        config.plugins.push(
+          new InjectManifest({
+            swSrc,
+            swDest,
+            exclude: [/\.\.\/server/, /sw\.js/],
+            globDirectory: '.',
+            globPatterns: ['static/**/*.{js,png,html,css,svg,ico,jpg}'],
+            manifestTransforms: [
+              originalManifest => {
+                const manifest = originalManifest.map(entry => {
+                  return {
+                    ...entry,
+                    url: entry.url.startsWith('static/')
+                      ? entry.url.replace('static', '')
+                      : entry.url
+                  };
+                });
+                // Optionally, set warning messages.
+                const warnings = []
+                return { manifest, warnings }
+              }
+            ]
+          })
+        );
+      }
+      return config
+    }
+  },
 }
