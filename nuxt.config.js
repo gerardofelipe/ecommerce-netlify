@@ -1,9 +1,42 @@
 import data from './static/storedata.json'
+import fs from 'fs';
+import path from 'path'
 
 let dynamicRoutes = () => {
   return new Promise(resolve => {
     resolve(data.map(el => `product/${el.id}`))
   })
+}
+const allRoutesList = async () => {
+
+  const pages = [
+    "/",
+    "all",
+    "cart",
+    "men",
+    "women"
+  ]
+
+  const dynamicPages = await dynamicRoutes()
+
+  return [
+    ...pages,
+    ...dynamicPages,
+  ];
+}
+
+const staticAssetList = () => {
+  const productImages = data.map(el => `products/${el.img}`)
+
+  const staticPath = path.resolve('static')
+  const staticFilesToExclude = ['sw.js', 'storedata.json']
+  const staticFiles = fs.readdirSync(staticPath).filter(file =>
+    !staticFilesToExclude.some(exclusion => file.includes(exclusion)))
+
+  return [
+    ...productImages,
+    ...staticFiles,
+  ];
 }
 
 export default {
@@ -65,7 +98,7 @@ export default {
   },
   pwa: {
     workbox: {
-      /* workbox options */
+      preCaching: [...allRoutesList(), ...staticAssetList()],
     }
   }
 }
