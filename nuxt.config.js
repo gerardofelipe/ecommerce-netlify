@@ -117,8 +117,10 @@ export default {
   },
   render: {
     dist: {
+      maxAge: '1y',
       setHeaders(res, path, stat) {
         if (path.includes('sw.js')) {
+          res.setHeader('Cache-Control', `public, max-age=${15 * 60}`)
           res.setHeader('Service-Worker-Allowed', '/');
         }
       }
