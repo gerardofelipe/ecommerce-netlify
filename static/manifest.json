@@ -1,5 +1,6 @@
 {
   "name": "ecommerce-netlify",
+  "short_name": "ecommerce-netlify",
   "description": "A serverless function to process stripe payments with Nuxt, Netlify, and Lambda",
   "theme_color": "#cccccc",
   "background_color": "#cccccc",

@@ -49,15 +49,23 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: process.env.npm_package_description || '',
+      },
+      { name: "theme-color", content: "#cccccc"},
+      { name: "msapplication-TileColor", content: "#cccccc"},
+      { name: "msapplication-TileImage", content: "/icons/icon-144x144.png"},
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {rel: "apple-touch-icon", sizes: "72x72", href: "/icons/icon-72x72.png"},
+      {rel: "apple-touch-icon", sizes: "144x144", href: "/icons/icon-144x144.png"},
+      {rel: "apple-touch-icon", sizes: "152x152", href: "/icons/icon-152x152.png"},
+      {rel: "apple-touch-icon", sizes: "192x192", href: "/icons/icon-152x152.png"},
+      {rel: "icon", type: "image/png", sizes: "192x192" , href: "/icons/icon-192x192.png"},
+      {rel: "icon", type: "image/png", sizes: "96x96", href: "/icons/icon-96x96.png"},
       {rel: 'manifest', href: '/manifest.json'},
       {
         rel: 'stylesheet',
