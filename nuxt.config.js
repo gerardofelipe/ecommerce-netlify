@@ -1,43 +1,36 @@
-import data from './static/storedata.json'
+import data from './static/storedata.json';
 import fs from 'fs';
-import path from 'path'
+import path from 'path';
 
-let dynamicRoutes = () => {
+const dynamicURLs = data.map(el => `product/${el.id}`);
+
+const dynamicRoutes = () => {
   return new Promise(resolve => {
-    resolve(data.map(el => `product/${el.id}`))
-  })
-}
-const allRoutesList = async () => {
+    resolve(dynamicURLs);
+  });
+};
 
-  const pages = [
-    "/",
-    "all",
-    "cart",
-    "men",
-    "women"
-  ]
+const allRoutesList = () => {
+  const staticURLs = ['/', 'all', 'cart', 'men', 'women'];
 
-  const dynamicPages = await dynamicRoutes()
-
-  return [
-    ...pages,
-    ...dynamicPages,
-  ];
-}
+  return [...staticURLs, ...dynamicURLs];
+};
 
 const staticAssetList = () => {
-  const productImages = data.map(el => `products/${el.img}`)
+  // /static
+  const staticPath = path.resolve('static');
+  const staticFilesToExclude = ['sw.js', 'storedata.json'];
+  const staticFiles = fs
+    .readdirSync(staticPath)
+    .filter(
+      file => !staticFilesToExclude.some(exclusion => file.includes(exclusion))
+    );
 
-  const staticPath = path.resolve('static')
-  const staticFilesToExclude = ['sw.js', 'storedata.json']
-  const staticFiles = fs.readdirSync(staticPath).filter(file =>
-    !staticFilesToExclude.some(exclusion => file.includes(exclusion)))
+  // /static/products
+  const productImages = data.map(el => `products/${el.img}`);
 
-  return [
-    ...productImages,
-    ...staticFiles,
-  ];
-}
+  return [...productImages, ...staticFiles];
+};
 
 export default {
   mode: 'universal',
@@ -84,9 +77,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    '@nuxtjs/pwa',
-  ],
+  modules: ['@nuxtjs/pwa'],
   /*
    ** Build configuration
    */
@@ -98,7 +89,7 @@ export default {
   },
   pwa: {
     workbox: {
-      preCaching: [...allRoutesList(), ...staticAssetList()],
+      preCaching: [...allRoutesList(), ...staticAssetList()]
     }
   }
-}
+};
