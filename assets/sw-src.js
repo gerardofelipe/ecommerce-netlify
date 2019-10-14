@@ -8,9 +8,6 @@ workbox.setConfig({ 'debug': false })
 // Start controlling any existing clients as soon as it activates
 workbox.core.clientsClaim()
 
-// Skip over the SW waiting lifecycle stage
-workbox.core.skipWaiting()
-
 workbox.precaching.cleanupOutdatedCaches()
 
 // --------------------------------------------------
@@ -65,4 +62,19 @@ workbox.routing.registerRoute(
 self.addEventListener('install', (event) => {
   const googleFontsUrl = 'https://fonts.googleapis.com/css?family=Montserrat:300,600|PT+Serif&display=swap'
   event.waitUntil(caches.open('google-fonts').then((cache) => cache.add(googleFontsUrl)));
+
+  const sweetAlertUrl = 'https://cdn.jsdelivr.net/npm/sweetalert2@8'
+  const runtimeCacheName = workbox.core.cacheNames.runtime;
+  event.waitUntil(caches.open(runtimeCacheName).then((cache) => cache.add(sweetAlertUrl)));
+});
+
+// --------------------------------------------------
+// Messages
+// --------------------------------------------------
+
+addEventListener('message', (event) => {
+  // Skip over the SW waiting lifecycle stage
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    skipWaiting();
+  }
 });
