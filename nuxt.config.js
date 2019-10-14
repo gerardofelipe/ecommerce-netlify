@@ -1,8 +1,8 @@
 import hooks from './hooks'
-import data from './static/storedata.json';
-import crypto from 'crypto';
+import data from './static/storedata.json'
+import crypto from 'crypto'
 import path from 'path'
-import { InjectManifest } from "workbox-webpack-plugin";
+import { InjectManifest } from "workbox-webpack-plugin"
 
 const dynamicURLs = data.map(el => `product/${el.id}`)
 
@@ -58,6 +58,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {rel: 'manifest', href: '/manifest.json'},
       {
         rel: 'stylesheet',
         href:

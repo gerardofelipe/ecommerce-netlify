@@ -24,6 +24,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest || [])
 // Register route handlers for runtimeCaching
 workbox.routing.registerRoute(new RegExp('/_nuxt/'), new workbox.strategies.CacheFirst ({}), 'GET')
 workbox.routing.registerRoute(new RegExp('/'), new workbox.strategies.NetworkFirst ({}), 'GET')
+workbox.routing.registerRoute(new RegExp('/manifest.json'), new workbox.strategies.NetworkFirst ({}), 'GET')
 
 workbox.routing.registerRoute(
   /^https:\/\/js\.stripe\.com\/v3/,
@@ -61,11 +62,12 @@ workbox.routing.registerRoute(
 
 self.addEventListener('install', (event) => {
   const googleFontsUrl = 'https://fonts.googleapis.com/css?family=Montserrat:300,600|PT+Serif&display=swap'
-  event.waitUntil(caches.open('google-fonts').then((cache) => cache.add(googleFontsUrl)));
+  event.waitUntil(caches.open('google-fonts').then((cache) => cache.add(googleFontsUrl)))
 
   const sweetAlertUrl = 'https://cdn.jsdelivr.net/npm/sweetalert2@8'
-  const runtimeCacheName = workbox.core.cacheNames.runtime;
-  event.waitUntil(caches.open(runtimeCacheName).then((cache) => cache.add(sweetAlertUrl)));
+  const runtimeCacheName = workbox.core.cacheNames.runtime
+  event.waitUntil(caches.open(runtimeCacheName)
+    .then((cache) => cache.addAll([sweetAlertUrl,'/manifest.json'])))
 });
 
 // --------------------------------------------------
