@@ -90,7 +90,8 @@ export default {
    */
   plugins: [
     '~/plugins/currency-filter.js',
-    { src: '~/plugins/workbox.client.js', mode: 'client' }
+    { src: '~/plugins/workbox.client.js', mode: 'client' },
+    { src: '~/plugins/vueAnalytics.js', mode: 'client' },
   ],
   /*
    ** Nuxt.js modules
