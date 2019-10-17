@@ -11,6 +11,12 @@ workbox.core.clientsClaim()
 workbox.precaching.cleanupOutdatedCaches()
 
 // --------------------------------------------------
+// Offline Google Analytics
+// --------------------------------------------------
+
+workbox.googleAnalytics.initialize();
+
+// --------------------------------------------------
 // Precaches
 // --------------------------------------------------
 
