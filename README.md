@@ -2,7 +2,7 @@
 
 # Yeah, it can be PWAmazing!
 
-The motivation of this repository is to show the transformation of a project into a PWA in demo time for my JSNight 2019.2 and JSDay Canarias 2019 talks
+The motivation of this repository is to show the transformation of a project into a PWA in demo time for my [JSNight 2019.2](https://www.meetup.com/es-ES/canarias-javascript/events/265096702) and [JSDay Canarias 2019](https://jsdaycanarias.com/) talks
 
 We will use two different approaches, using the [@nuxtjs/pwa](https://pwa.nuxtjs.org/) module and [Google's Workbox Libraries](https://developers.google.com/web/tools/workbox)
 
