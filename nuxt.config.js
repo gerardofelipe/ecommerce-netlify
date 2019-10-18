@@ -87,6 +87,11 @@ export default {
      */
     extend(config, ctx) {}
   },
+  render: {
+    bundleRenderer: {
+      shouldPrefetch: (file, type) => true
+    }
+  },
   pwa: {
     workbox: {
       preCaching: [...allRoutesList(), ...staticAssetList()]
