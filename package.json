@@ -1,8 +1,8 @@
 {
-  "name": "ecommerce-netlify",
+  "name": "ecommerce-netlify-pwa",
   "version": "1.0.0",
-  "description": "A serverless function to process stripe payments with Nuxt, Netlify, and Lambda",
-  "author": "sdras",
+  "description": "The sdras/ecommerce-netlify PWAtized!",
+  "author": "gerardofelipe",
   "private": true,
   "scripts": {
     "dev": "nuxt",
