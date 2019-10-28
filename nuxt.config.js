@@ -73,7 +73,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [`~/plugins/currency-filter.js`],
+  plugins: [
+    '~/plugins/currency-filter.js',
+    { src: '~/plugins/client-sw.js', mode: 'client' }
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -94,6 +97,8 @@ export default {
   },
   pwa: {
     workbox: {
+      skipWaiting: false, // we ask the user
+      workboxExtensions: '@/plugins/workbox-extensions.js',
       preCaching: [...allRoutesList(), ...staticAssetList()]
     }
   }
