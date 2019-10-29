@@ -60,11 +60,6 @@ export default {
      */
     extend(config, ctx) {}
   },
-  render: {
-    bundleRenderer: {
-      shouldPrefetch: (file, type) => true
-    }
-  },
   pwa: pwaConfig,
   hooks: hooks(this),
 };
