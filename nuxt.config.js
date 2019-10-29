@@ -1,13 +1,5 @@
-import data from './static/storedata.json';
 import pwaConfig from './pwa.config'
-
-export const dynamicURLs = data.map(el => `product/${el.id}`);
-
-const dynamicRoutes = () => {
-  return new Promise(resolve => {
-    resolve(dynamicURLs);
-  });
-};
+import { dynamicRoutes } from "./utils/routes";
 
 export default {
   mode: 'universal',
