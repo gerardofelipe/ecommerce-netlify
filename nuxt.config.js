@@ -1,35 +1,12 @@
 import data from './static/storedata.json';
-import fs from 'fs';
-import path from 'path';
+import pwaConfig from './pwa.config'
 
-const dynamicURLs = data.map(el => `product/${el.id}`);
+export const dynamicURLs = data.map(el => `product/${el.id}`);
 
 const dynamicRoutes = () => {
   return new Promise(resolve => {
     resolve(dynamicURLs);
   });
-};
-
-const allRoutesList = () => {
-  const staticURLs = ['/', 'all', 'cart', 'men', 'women'];
-
-  return [...staticURLs, ...dynamicURLs];
-};
-
-const staticAssetList = () => {
-  // /static
-  const staticPath = path.resolve('static');
-  const staticFilesToExclude = ['sw.js', 'storedata.json'];
-  const staticFiles = fs
-    .readdirSync(staticPath)
-    .filter(
-      file => !staticFilesToExclude.some(exclusion => file.includes(exclusion))
-    );
-
-  // /static/products
-  const productImages = data.map(el => `products/${el.img}`);
-
-  return [...productImages, ...staticFiles];
 };
 
 export default {
@@ -95,13 +72,5 @@ export default {
       shouldPrefetch: (file, type) => true
     }
   },
-  pwa: {
-    workbox: {
-      skipWaiting: false, // we ask the user
-      workboxExtensions: '@/plugins/workbox-extensions.js',
-      preCaching: [...allRoutesList(), ...staticAssetList()],
-      runtimeCaching: [{ urlPattern: 'https://js.stripe.com/v3', handler: 'StaleWhileRevalidate' }],
-      routingExtensions: '@/plugins/workbox-routing-extensions.js',
-    }
-  }
+  pwa: pwaConfig
 };
