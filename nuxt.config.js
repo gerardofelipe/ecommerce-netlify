@@ -99,7 +99,8 @@ export default {
     workbox: {
       skipWaiting: false, // we ask the user
       workboxExtensions: '@/plugins/workbox-extensions.js',
-      preCaching: [...allRoutesList(), ...staticAssetList()]
+      preCaching: [...allRoutesList(), ...staticAssetList()],
+      runtimeCaching: [{ urlPattern: 'https://js.stripe.com/v3', handler: 'StaleWhileRevalidate' }],
     }
   }
 };
