@@ -101,6 +101,7 @@ export default {
       workboxExtensions: '@/plugins/workbox-extensions.js',
       preCaching: [...allRoutesList(), ...staticAssetList()],
       runtimeCaching: [{ urlPattern: 'https://js.stripe.com/v3', handler: 'StaleWhileRevalidate' }],
+      routingExtensions: '@/plugins/workbox-routing-extensions.js',
     }
   }
 };
