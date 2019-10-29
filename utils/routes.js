@@ -1,6 +1,6 @@
 import data from '../static/storedata'
-import fs from 'fs'
-import path from 'path'
+import crypto from 'crypto'
+import get from 'lodash/get'
 
 const dynamicURLs = data.map(el => `product/${el.id}`)
 
@@ -10,22 +10,13 @@ export const dynamicRoutes = () => {
   })
 }
 
-export const allRoutesList = () => {
-  const staticURLs = ['/', 'all', 'cart', 'men', 'women']
+export const getTemplatedURLs = nuxt => {
+  const routes = get(nuxt, 'options.router.routes', [])
+  const staticURLs = routes.map(({ path }) => path).filter(route => !route.includes('/:'))
 
-  return [...staticURLs, ...dynamicURLs]
-}
-
-export const staticAssetList = () => {
-  // /static
-  const staticPath = path.resolve('static')
-  const staticFilesToExclude = ['sw.js', 'storedata.json']
-  const staticFiles = fs
-    .readdirSync(staticPath)
-    .filter(file => !staticFilesToExclude.some(exclusion => file.includes(exclusion)))
-
-  // /static/products
-  const productImages = data.map(el => `products/${el.img}`)
-
-  return [...productImages, ...staticFiles]
+  return [...staticURLs, ...dynamicURLs.map(url => `/${url}`)].reduce((acc, url) => {
+    // Add revision version to the url
+    acc[url] = crypto.randomBytes(7).toString('hex')
+    return acc
+  }, {})
 }
