@@ -1,9 +1,20 @@
-const updateAvailableAlertConfig = {
+const commonAlertConfig = {
   toast: true,
   type: 'info',
   position: 'bottom-end',
   showCloseButton: true,
   background: '#efefef',
+}
+
+const firstInstallAlertConfig = {
+  ...commonAlertConfig,
+  title: 'Offline navigation is available now!',
+  showConfirmButton: false,
+  timer: 5000,
+}
+
+const updateAvailableAlertConfig = {
+  ...commonAlertConfig,
   title: 'Skyline Ivy Store Update Available',
   html: '<p style="padding: 0 0.5rem">We just installed a new version of the store, refresh to update!</p>',
   confirmButtonText: 'Reload Page',
@@ -38,6 +49,14 @@ const clientSWCustomCode = async () => {
       skipWaiting(workbox) // skip waiting without ask
       return
     }
+
+    workbox.addEventListener('activated', async ({ isUpdate }) => {
+      if (isUpdate) return
+
+      Swal.fire(firstInstallAlertConfig)
+        .then()
+        .catch(err => console.error(err))
+    })
 
     workbox.addEventListener('waiting', async event => {
       Swal.fire(updateAvailableAlertConfig)
