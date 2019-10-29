@@ -1,4 +1,9 @@
 const config = {
+  manifest: {
+    theme_color: '#cccccc',
+    background_color: '#cccccc',
+  },
+  meta: { nativeUI: true },
   workbox: {
     skipWaiting: false, // we ask the user
     offlineAnalytics: true,
