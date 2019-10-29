@@ -1,5 +1,6 @@
+import hooks from './hooks'
 import pwaConfig from './pwa.config'
-import { dynamicRoutes } from "./utils/routes";
+import { dynamicRoutes } from './utils/routes'
 
 export default {
   mode: 'universal',
@@ -64,5 +65,6 @@ export default {
       shouldPrefetch: (file, type) => true
     }
   },
-  pwa: pwaConfig
+  pwa: pwaConfig,
+  hooks: hooks(this),
 };
