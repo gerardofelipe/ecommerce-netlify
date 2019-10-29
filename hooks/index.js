@@ -1,5 +1,3 @@
-import generate from './generate'
+import build from './build'
 
-export default nuxtConfig => ({
-  generate: generate(nuxtConfig),
-})
+export default nuxtConfig => ({ build: build(nuxtConfig) })
