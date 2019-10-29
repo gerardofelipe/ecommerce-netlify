@@ -1,3 +1,4 @@
+import { createPrecacheManifest } from '../utils/precacheManifest'
 import { getTemplatedURLs } from '../utils/routes'
 import { getManifest } from 'workbox-build'
 
@@ -19,6 +20,8 @@ export default nuxtConfig => ({
           '.nuxt/dist/client': '_nuxt',
         },
       })
+
+      await createPrecacheManifest(manifestEntries)
     } catch (ex) {
       console.error(ex)
     }
