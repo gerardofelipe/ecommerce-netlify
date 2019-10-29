@@ -89,3 +89,6 @@ sw.*
 
 # Prettier
 .prettierrc
+
+# OneSignal
+OneSignalSDK*
