@@ -45,7 +45,8 @@ export default {
    */
   plugins: [
     '~/plugins/currency-filter.js',
-    { src: '~/plugins/client-sw.js', mode: 'client' }
+    { src: '~/plugins/client-sw.js', mode: 'client' },
+    { src: '~/plugins/vueAnalytics.js', mode: 'client' },
   ],
   /*
    ** Nuxt.js modules

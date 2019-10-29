@@ -22,6 +22,7 @@
     "stripe": "^7.4.0",
     "sweetalert2": "^8.18.6",
     "uuid": "^3.3.2",
+    "vue-analytics": "^5.17.2",
     "vue-star-rating": "^1.6.1",
     "vue-stripe-elements-plus": "^0.2.10"
   },
