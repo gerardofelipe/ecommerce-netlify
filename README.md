@@ -2,22 +2,38 @@
 
 # Yeah, it can be PWAmazing!
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fbf53d4a-d931-4768-a7ee-3d9fffb9f407/deploy-status)](https://app.netlify.com/sites/ecommerce-netlify-pwa/deploys)
+
 The motivation of this repository is to show the transformation of a project into a PWA in demo time for my [JSNight 2019.2](https://www.meetup.com/es-ES/canarias-javascript/events/265096702) and [JSDay Canarias 2019](https://jsdaycanarias.com/) talks
 
 We will use two different approaches, using the [@nuxtjs/pwa](https://pwa.nuxtjs.org/) module and [Google's Workbox Libraries](https://developers.google.com/web/tools/workbox)
 
-- Give you offline capabilities
+- Give it offline capabilities
 - Make it installable on different devices
 - Use of runtime cache
 - Different caching strategies
 - The use of precaching
 - Friendly handling of application updates
 - Offline Google Analytics with background synchronization
-- Push notifications [WIP]
+- Push notifications using [OneSignal](https://onesignal.com/)
+- Client-side DB working even offline with automatic background synchronization [WIP]
 - ...
 - More to come!
 
-Demo site is here: [E-Commerce Store PWA](https://ecommerce-netlify-pwa.netlify.com/)
+**Demo site is here:** [E-Commerce Store PWA](https://ecommerce-netlify-pwa.netlify.com/)
+
+**NOTE:** To get a better idea of why and how of some decisions and different ways of doing things, here is the order of the branches to follow for both approaches
+
+| Oder 	| @nuxtjs/pwa                        	|   	| Oder 	| workbox-webpack-plugin      	|
+|:----:	|------------------------------------	| --- |:----:	|-----------------------------	|
+|   0  	| original                           	|   	|   0  	| original                    	|
+|   1  	| add-pwa-module                     	|   	|   1  	| inject-manifest-precache    	|
+|   2  	| pwa-module-installable             	|   	|   2  	| skip-waiting-confirmation   	|
+|   3  	| pwa-module-basic-register-route    	|   	|   3  	| inject-manifest-installable 	|
+|   4  	| pwa-module-precache-dynamic-assets 	|   	|   4  	| google-analytics            	|
+|   5  	| pwa-module-offline                 	|   	|     	|                             	|
+|   6  	| pwa-module-offline-analytics       	|   	|     	|                             	|
+|   7  	| pwa-module-push-notifications      	|   	|     	|                             	|
 
 ### ORIGINAL README.MD
 > 
