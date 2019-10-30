@@ -50,7 +50,10 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa'],
+  modules: [
+    '@nuxtjs/onesignal',
+    '@nuxtjs/pwa'
+  ],
   /*
    ** Build configuration
    */
@@ -62,4 +65,14 @@ export default {
   },
   pwa: pwaConfig,
   hooks: hooks(this),
+  oneSignal: {
+    init: {
+      appId: '7209773f-0abc-44c3-9055-02520e841f90',
+      allowLocalhostAsSecureOrigin: true,
+      notifyButton: {
+        enable: true,
+        showCredit: false,
+      },
+    }
+  }
 };

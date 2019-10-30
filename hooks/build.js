@@ -12,7 +12,7 @@ export default nuxtConfig => ({
       const { manifestEntries } = await getManifest({
         templatedURLs: getTemplatedURLs(nuxt),
         globDirectory: '.',
-        globIgnores: ['**/sw.js'],
+        globIgnores: ['**/sw.js', 'OneSignalSDK'],
         globPatterns: ['static/**/*.{js,png,html,css,svg,ico,jpg}', '.nuxt/dist/client/**/*.{js,json,png}'],
         dontCacheBustURLsMatching: /^_nuxt\//,
         modifyURLPrefix: {
