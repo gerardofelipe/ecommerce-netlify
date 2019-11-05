@@ -67,7 +67,8 @@ export default {
   hooks: hooks(this),
   oneSignal: {
     init: {
-      appId: '7209773f-0abc-44c3-9055-02520e841f90',
+      appId: '7209773f-0abc-44c3-9055-02520e841f90', // prod
+      // appId: '99747ce7-56d2-4584-8a49-341e97d9de65', // dev
       allowLocalhostAsSecureOrigin: true,
       notifyButton: {
         enable: true,

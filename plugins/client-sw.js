@@ -29,6 +29,7 @@ const importSwal = async () => {
   }
 }
 
+// @TODO Disabled until a solution to OneSignal's automatic skipwaiting is found
 const skipWaiting = workbox => {
   workbox.addEventListener('controlling', event => {
     window.location.reload()
@@ -45,10 +46,11 @@ const clientSWCustomCode = async () => {
 
     const Swal = await importSwal()
 
-    if (!Swal) {
-      skipWaiting(workbox) // skip waiting without ask
-      return
-    }
+    // @TODO Disabled until a solution to OneSignal's automatic skipwaiting is found
+    //   if (!Swal) {
+    //     skipWaiting(workbox) // skip waiting without ask
+    //     return
+    //   }
 
     workbox.addEventListener('activated', async ({ isUpdate }) => {
       if (isUpdate) return
@@ -58,16 +60,17 @@ const clientSWCustomCode = async () => {
         .catch(err => console.error(err))
     })
 
-    workbox.addEventListener('waiting', async event => {
-      Swal.fire(updateAvailableAlertConfig)
-        .then(reload => {
-          if (reload) skipWaiting(workbox) // skip waiting without ask
-        })
-        .catch(err => {
-          console.error(err)
-          skipWaiting(workbox) // skip waiting without ask
-        })
-    })
+    // @TODO Disabled until a solution to OneSignal's automatic skipwaiting is found
+    //   workbox.addEventListener('waiting', async event => {
+    //     Swal.fire(updateAvailableAlertConfig)
+    //       .then(reload => {
+    //         if (reload) skipWaiting(workbox) // skip waiting without ask
+    //       })
+    //       .catch(err => {
+    //         console.error(err)
+    //         skipWaiting(workbox) // skip waiting without ask
+    //       })
+    //   })
   } catch (ex) {
     console.error(ex)
   }

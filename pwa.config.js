@@ -5,7 +5,8 @@ const config = {
   },
   meta: { nativeUI: true },
   workbox: {
-    skipWaiting: false, // we ask the user
+    swURL: '/OneSignalSDKWorker.js',
+    skipWaiting: true, // @TODO Enabled until a solution to OneSignal's automatic skipwaiting is found
     offlineAnalytics: true,
     workboxExtensions: '@/plugins/workbox-extensions.js',
     cachingExtensions: '@/plugins/workbox-caching-extensions.js',
