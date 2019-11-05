@@ -1,3 +1,4 @@
+import { oneSignalWorkerHack } from '../utils/oneSignal'
 import { createPrecacheManifest } from '../utils/precacheManifest'
 import { getTemplatedURLs } from '../utils/routes'
 import { getManifest } from 'workbox-build'
@@ -8,6 +9,7 @@ export default nuxtConfig => ({
    * {@link node_modules/nuxt/lib/core/builder.js}
    */
   async done(nuxt) {
+    oneSignalWorkerHack()
     try {
       const { manifestEntries } = await getManifest({
         templatedURLs: getTemplatedURLs(nuxt),
